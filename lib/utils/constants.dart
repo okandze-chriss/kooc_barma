@@ -70,6 +70,18 @@ List<String> initEmptyList(int length) {
   return values;
 }
 
+List<String> stringToList(String word) {
+  List<String> values = [];
+  for (var i = 0; i < word.length; i++) {
+    values.add(word[i]);
+  }
+  return values;
+}
+
+bool compareTwoList(List<dynamic> listOne, List<dynamic> listTwo) {
+  return listOne.join('') == listTwo.join('');
+}
+
 Future<void> dialogBuilder(BuildContext context, Function()? onPressed) {
   return showDialog<void>(
     context: context,
@@ -102,6 +114,53 @@ Future<void> dialogBuilder(BuildContext context, Function()? onPressed) {
                         LinearBorder.none),
                     backgroundColor: MaterialStatePropertyAll(
                         KoocUtils.btnGreenColor.withOpacity(0.5)),
+                    textStyle: const MaterialStatePropertyAll(
+                        TextStyle(color: KoocUtils.textColor))),
+                child: const Text(
+                  'Continuer',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                )),
+          )
+        ],
+      );
+    },
+  );
+}
+
+Future<void> errorBuilder(BuildContext context, Function()? onPressed) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+        title: const Text('Basic dialog title'),
+        content: const SizedBox(
+          height: double.maxFinite,
+          child: Column(
+            children: [
+              Text(
+                'A dialog is a type of modal window that\n'
+                'appears in front of app content to\n'
+                'provide critical information, or prompt\n'
+                'for a decision to be made.',
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Align(
+            alignment: Alignment.center,
+            child: ElevatedButton(
+                onPressed: onPressed,
+                style: ButtonStyle(
+                    padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                        EdgeInsets.all(20.0)),
+                    shape: const MaterialStatePropertyAll<OutlinedBorder>(
+                        LinearBorder.none),
+                    backgroundColor: MaterialStatePropertyAll(Colors.red),
                     textStyle: const MaterialStatePropertyAll(
                         TextStyle(color: KoocUtils.textColor))),
                 child: const Text(

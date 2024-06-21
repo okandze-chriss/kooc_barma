@@ -10,6 +10,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isClicked = false;
+  int counter = 0;
+
   String resultValue = "";
 
   List<String> images = [];
@@ -129,31 +131,42 @@ class _HomePageState extends State<HomePage> {
                             (index) => GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      result[index] = totalLetter[index];
+                                      result[counter] = totalLetter[index];
                                       isClicked = true;
                                     });
 
-                                    if (index == result.length - 1) {
-                                      dialogBuilder(
-                                        context,
-                                        () {
-                                          setState(() {
-                                            resultValue = "bruit";
-                                            result = initEmptyList(
-                                                resultValue.length);
-                                            totalLetter =
-                                                koocClavier(resultValue);
-                                            images = [
-                                              'images/bruit/bruit.jpeg',
-                                              'images/bruit/bruit2.jpg',
-                                              'images/bruit/bruit3.jpg',
-                                              'images/bruit/bruit4.webp'
-                                            ];
-                                          });
-                                          Navigator.of(context).pop();
-                                        },
-                                      );
+                                    if (result[result.length - 1].isNotEmpty) {
+                                      if (compareTwoList(
+                                          result, stringToList(resultValue))) {
+                                        dialogBuilder(
+                                          context,
+                                          () {
+                                            setState(() {
+                                              resultValue = "bruit";
+                                              result = initEmptyList(
+                                                  resultValue.length);
+                                              totalLetter =
+                                                  koocClavier(resultValue);
+                                              images = [
+                                                'images/bruit/bruit.jpeg',
+                                                'images/bruit/bruit2.jpg',
+                                                'images/bruit/bruit3.jpg',
+                                                'images/bruit/bruit4.webp'
+                                              ];
+                                            });
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      } else {
+                                        errorBuilder(
+                                          context,
+                                          () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        );
+                                      }
                                     }
+                                    counter++;
                                   },
                                   child: Container(
                                       margin: const EdgeInsets.only(
